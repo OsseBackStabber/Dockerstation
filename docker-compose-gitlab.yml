@@ -1,0 +1,32 @@
+#Gitlab
+version: '3.6'
+
+networks:
+  web:
+    external: true
+  internal:
+    external: false
+
+services:
+  web:
+    image: 'gitlab/gitlab-ee:latest'
+    restart: always
+    hostname: 'gitlab.rockandstone.nl'
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'https://gitlab.rockandstone.nl'
+        # Add any other gitlab.rb configuration here, each on its own line
+    labels:
+      - traefik.http.routers.blog.rule=Host(`gitlab.rockandstone.nl`)
+      - traefik.http.routers.blog.tls=true
+      - traefik.http.routers.blog.tls.certresolver=lets-encrypt
+      - traefik.port=8081
+    ports:
+      - '8081:80'
+      - '9443:443'
+      - '2224:22'
+    volumes:
+      - '$GITLAB_HOME/config:/etc/gitlab'
+      - '$GITLAB_HOME/logs:/var/log/gitlab'
+      - '$GITLAB_HOME/data:/var/opt/gitlab'
+    shm_size: '2048mb'

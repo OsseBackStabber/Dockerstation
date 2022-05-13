@@ -5,7 +5,7 @@ if ! [ -x "$(command -v docker-compose)" ]; then
   exit 1
 fi
 
-domains=(rockandstone.nl www.rockandstone.nl portainer.rockandstone.n)
+domains=(portainer.rockandstone.nl gitlab.rockandstone.nl unifi.rockandstone.nl)
 rsa_key_size=4096
 data_path="./data/certbot"
 email="calvinsteenbergen@gmail.com" # Adding a valid address is strongly recommended
